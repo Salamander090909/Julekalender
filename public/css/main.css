@@ -1,34 +1,52 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 :root {
     --mainBackground: #0f1b2d;
     --ruteCard: #172A45;
     --darkRed: #AB1109;
 
     --mainBorder: rgba(255, 255, 255, 0.171);
+    --borderRadius: 10px;
 
-    --kalenderWidth: 50%;
+
+    --kalenderWidth: calc(50% - 60px);
+    --velkommenCardWidth: calc(40%);
 
     --textColor: #ffe5e5;
 
     --h1font: 'Nunito', sans-serif;
+    --logoFont: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+    --cardPadding: 30px;
 }
 
 body {
     background-color: var(--mainBackground);
     display: flex;
+    flex-direction: column;
     margin: 0;
     min-height: 100vh;
-    width: 100%;
-    justify-content: center;    
+    width: 100%; 
+    gap: 30px;
 }
 
 nav {
     display: flex;
-    position: absolute;
     background-color: var(--darkRed);
     border: 1px solid transparent;  
     margin: 0;
     width: 100%;
-    justify-content: left;
+    color: white;   
+}
+
+nav .content {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 nav a {
@@ -38,14 +56,16 @@ nav a {
 }
 
 ul {
-    list-style: none;   
+    display: flex;
+    align-items: center;
+    list-style: none;
+    color: white;
 }
 
 main {
     display: flex;
     width: 100%;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
 .kalenderBox {
@@ -56,6 +76,9 @@ main {
     grid-auto-rows: 100px;
     grid-auto-flow: dense;
     gap: 10px;
+    padding: var(--cardPadding);
+    background-color: rgba(255, 0, 0, 0.151);
+    border-radius: var(--borderRadius);
 }
 
 .bred {
@@ -70,16 +93,25 @@ main {
     display: flex;
     justify-content: center;
     border: 1px solid black;
-    background-color: white;
+    background: #ec3e5bd6;
     align-items: center;
     transition: rotate 0.2s ease-in-out;
+    border-radius: var(--borderRadius);
+    font-size: 40px;
 }
 
 .luke:hover {
     rotate: 5deg;
 }
 
-.rute h1 {
-    color: var(--textColor);
+.velkommenCard {
+    display: flex;
+    width: var(--velkommenCardWidth);
+    border: 4px solid var(--mainBorder);
+    background-color: white;
+    padding: var(--cardPadding);
+    padding-top: 10px;
+    border-radius: var(--borderRadius);
+    backdrop-filter: blur(12px);
     font-family: var(--h1font);
 }
