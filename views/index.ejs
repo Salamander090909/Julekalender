@@ -7,56 +7,12 @@
         </section>
 
         <section class="kalenderBox">
-            <a class="luke">1</a>
-            
-            <a class="luke bred">2</a>
-            
-            <a class="luke">3</a>
-            
-            <a class="luke høy">4</a>
-            
-            <a class="luke høy">5</a>
-            
-            <a class="luke">6</a>
-            
-            <a class="luke bred">7</a>
-            
-            <a class="luke bred">8</a>
-            
-            <a class="luke">9</a>
-            
-            <a class="luke">10</a>
-            
-            <a class="luke høy">11</a>
-            
-            <a class="luke">12</a>
-            
-            <a class="luke">13</a>
-            
-            <a class="luke">14</a>
-            
-            <a class="luke">15</a>
-            
-            <a class="luke bred">16</a>
-            
-            <a class="luke">17</a>
-            
-            <a class="luke høy">18</a>
-            
-            <a class="luke høy">19</a>
-            
-            <a class="luke">20</a>
-            
-            <a class="luke bred">21</a>
-            
-            <a class="luke høy">22</a>
-            
-            <a class="luke">23</a>
-            
-            <a class="luke bred">24</a>
-            
+            <% luker.forEach(luke => { %>
+                <a class="luke <%= luke.klasse %>" data-luke="<%= luke.nr %>"><%= luke.nr %></a>
+            <% }) %>
 
         </section>
+
     </main>
 </body>
 </html>

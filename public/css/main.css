@@ -95,13 +95,15 @@ main {
     border: 1px solid black;
     background: #ec3e5bd6;
     align-items: center;
-    transition: rotate 0.2s ease-in-out;
+    transition: 0.2s ease-in-out;
     border-radius: var(--borderRadius);
     font-size: 40px;
 }
 
 .luke:hover {
     rotate: 5deg;
+    scale: 1.1;
+    background-color: #de1a3a;
 }
 
 .velkommenCard {
