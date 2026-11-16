@@ -1,4 +1,31 @@
 <%- include("./partials/head") %>
 <body>
-    
+    <h1><%= luke.tittel %></h1>
+    <p>Dette er luke nummer <%= luke.nr %></p>
+
+    <% luke.blokker.forEach(blokk => { %>
+        <p>Type: <%= blokk.type %></p>
+    <% }) %>
+
+    <% luke.blokker.forEach(blokk => { %>
+
+        <% if (blokk.type === "tekst") { %>
+            <p><%= blokk.tekst %></p>
+            <input type="text">
+
+        <% } else if (blokk.type === "video") { %>
+            <iframe src="<%= blokk.url %>" allowfullscreen></iframe>
+
+        <% } else if (blokk.type === "gate") { %>
+            <p><%= blokk.sporsmal %></p>
+
+        <% } else if (blokk.type === "quiz") { %>
+            <p><%= blokk.sporsmal %></p>
+            <% blokk.svar.forEach(svar => { %>
+                <button><%= svar %></button>
+            <% }) %>
+
+        <% } %>
+
+    <% }) %>
 </body>
