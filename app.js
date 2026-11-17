@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGODB_URI);
 app.get("/", async (req, res) => {
     const luker = await Luke.find().sort({ nr: 1 });
 
-    const idag = new Date("2026-12-5"); 
+    const idag = new Date("2026.12.5"); 
     const dag = idag.getMonth() === 11 ? idag.getDate() : 0;
 
     let user = null

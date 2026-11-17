@@ -1,4 +1,5 @@
 <%- include("./partials/head") %>
+
 <body>
 
     <h1><%= luke.tittel %></h1>
@@ -14,52 +15,23 @@
 
             <% } else if (blokk.type === "video") { %>
 
-                <iframe src="<%= blokk.url %>" allowfullscreen></iframe>
+                <iframe
+                    src="<%= blokk.url %>"
+                    allowfullscreen>
+                </iframe>
 
-            <% } else if (blokk.type === "gate") { %>
+            <% } else if (blokk.type === "bilde") { %>
 
-                <p><%= blokk.sporsmal %></p>
-
-                <input
-                    type="text"
-                    name="svar[<%= index %>][valgtSvar]"
-                    required
-                >
-
-            <% } else if (blokk.type === "quiz") { %>
-
-                <p><%= blokk.sporsmal %></p>
-
-                <% blokk.svar.forEach(alternativ => { %>
-
-                    <label>
-                        <input
-                            type="radio"
-                            name="svar[<%= index %>][valgtSvar]"
-                            value="<%= alternativ %>"
-                            required
-                        >
-
-                        <%= alternativ %>
-                    </label>
-
-                    <br>
-
-                <% }) %>
-
-            <% } %>
-
-            <% if (blokk.type === "gate" || blokk.type === "quiz") { %>
-
-                <input
-                    type="hidden"
-                    name="svar[<%= index %>][blokkIndex]"
-                    value="<%= index %>"
+                <img
+                    src="<%= blokk.url %>"
+                    alt="Bilde for luke <%= luke.nr %>"
                 >
 
             <% } %>
 
         <% }) %>
+
+        <input type="text" name="svar" placeholder="Svaret ditt ..." required>
 
         <button type="submit">Send inn svar</button>
 

@@ -6,7 +6,7 @@
     --mainBackground: #0f1b2d;
     --ruteCard: #172A45;
     --darkRed: #b40018;
-    --lukeTextColor: #670714;
+    --lukeTextColor: #ffffff;
 
     --mainBorder: rgba(255, 255, 255, 0.171);
     --borderRadius: 10px;
@@ -223,3 +223,27 @@ main {
     font-family: var(--h1font);
 }
 
+
+
+
+
+
+
+
+@media screen and (max-width: 1000px) {    
+    main {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .kalenderBox {
+        width: calc(100% - 60px);
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .velkommenCard {
+        width: 80%;
+    }
+
+
+}

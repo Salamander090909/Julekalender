@@ -9,8 +9,7 @@ const lukeSchema = mongoose.Schema({
         tekst: String,
         url: String,
         spørsmål: String,
-        svar: [String],
-        riktig: String
+        svar: [String]
     }]
 });
 
