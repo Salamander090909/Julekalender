@@ -29,6 +29,11 @@
 
             <% } %>
 
+            <% if (dag > luke.nr) { %>
+                <h1>Vinner av denne dagen er ...</h1>
+            <% } %>
+            
+            <input type="hidden" name="blokkIndex" value="<%= index %>">
         <% }) %>
 
         <input type="text" name="svar" placeholder="Svaret ditt ..." required>

@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGODB_URI);
 app.get("/", async (req, res) => {
     const luker = await Luke.find().sort({ nr: 1 });
 
-    const idag = new Date("2026.12.5"); 
+    const idag = new Date("2026.12.14"); 
     const dag = idag.getMonth() === 11 ? idag.getDate() : 0;
 
     let user = null
@@ -50,6 +50,8 @@ app.get("/register", (req, res) => {
 app.get("/luke/:nr", async (req, res) => {
     const nr = Number(req.params.nr);
     const luke = await Luke.findOne({ nr });
+    const idag = new Date("2026.12.14"); 
+    const dag = idag.getMonth() === 11 ? idag.getDate() : 0;
 
     if (!luke) {
         return res.status(404).send("Fant ikke luken");
@@ -69,7 +71,7 @@ app.get("/luke/:nr", async (req, res) => {
         return res.redirect("/register")
     }
 
-    res.render("kalenderQuiz", { luke, user });
+    res.render("kalenderQuiz", { luke, user, dag });
 
 });
 
@@ -156,7 +158,6 @@ app.post("/luke/:nr/svar", async (req, res) => {
             new: true
         }
     );
-
     res.redirect("/")
 })
 
