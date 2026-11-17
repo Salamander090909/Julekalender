@@ -85,4 +85,4 @@ app.post("/register", async (req, res) => {
 });
 
 
-app.listen(process.env.PORT)
+app.listen(process.env.PORT);

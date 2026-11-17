@@ -5,7 +5,8 @@
 :root {
     --mainBackground: #0f1b2d;
     --ruteCard: #172A45;
-    --darkRed: #D6001C;
+    --darkRed: #b40018;
+    --lukeTextColor: #670714;
 
     --mainBorder: rgba(255, 255, 255, 0.171);
     --borderRadius: 10px;
@@ -173,6 +174,9 @@ main {
     border-radius: var(--borderRadius);
     transform-origin: left center; 
     transition: transform 0.4s ease;
+    color: var(--lukeTextColor);
+    font-weight: bold;
+    text-shadow: 0.5px 0.5px black;
 }
 
 @keyframes open {
