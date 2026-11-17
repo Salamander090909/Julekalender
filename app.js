@@ -35,14 +35,30 @@ app.get("/register", (req, res) => {
 
 app.get("/luke/:nr", async (req, res) => {
     const nr = Number(req.params.nr);
-
     const luke = await Luke.findOne({ nr });
-    if (!luke) return res.status(404).send("Fant ikke luken");
 
-    res.render("kalenderQuiz", { luke });
+    if (!luke) {
+        return res.status(404).send("Fant ikke luken");
+    }
+
+    const token = req.cookies.jwt;
+
+    if (!token) {
+        return res.redirect("/register")
+    }
+
+    const decoded = jwt.verify(token, process.env.SECRET_JWT);
+
+    const user = await User.findById(decoded.userId);
+
+    if (!user) {
+        return res.redirect("/register")
+    }
+
+    res.render("kalenderQuiz", { luke, user });
+
 });
 
-js
 app.post("/register", async (req, res) => {
     const { email } = req.body;
 
