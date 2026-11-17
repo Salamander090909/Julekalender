@@ -4,21 +4,24 @@ const besvarelseSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        require: true
+        required: true
     },
 
     luke: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "luke",
-        require: true
+        ref: "Luke",
+        required: true
     },
 
     svar: [{
         blokkIndex: Number,
         valgtSvar: String
     }]
-})
 
-const Besvarelse = mongoose.model("besvarelse", besvarelseSchema);
+}, { timestamps: true });
+
+besvarelseSchema.index({ user: 1, luke: 1 }, { unique: true });
+
+const Besvarelse = mongoose.model("Besvarelse", besvarelseSchema);
 
 module.exports = Besvarelse;
