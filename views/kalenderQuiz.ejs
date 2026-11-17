@@ -1,31 +1,68 @@
 <%- include("./partials/head") %>
 <body>
+
     <h1><%= luke.tittel %></h1>
     <p>Dette er luke nummer <%= luke.nr %></p>
 
-    <% luke.blokker.forEach(blokk => { %>
-        <p>Type: <%= blokk.type %></p>
-    <% }) %>
+    <form action="/luke/<%= luke.nr %>/svar" method="POST">
 
-    <% luke.blokker.forEach(blokk => { %>
+        <% luke.blokker.forEach((blokk, index) => { %>
 
-        <% if (blokk.type === "tekst") { %>
-            <p><%= blokk.tekst %></p>
-            <input type="text">
+            <% if (blokk.type === "tekst") { %>
 
-        <% } else if (blokk.type === "video") { %>
-            <iframe src="<%= blokk.url %>" allowfullscreen></iframe>
+                <p><%= blokk.tekst %></p>
 
-        <% } else if (blokk.type === "gate") { %>
-            <p><%= blokk.sporsmal %></p>
+            <% } else if (blokk.type === "video") { %>
 
-        <% } else if (blokk.type === "quiz") { %>
-            <p><%= blokk.sporsmal %></p>
-            <% blokk.svar.forEach(svar => { %>
-                <button><%= svar %></button>
-            <% }) %>
+                <iframe src="<%= blokk.url %>" allowfullscreen></iframe>
 
-        <% } %>
+            <% } else if (blokk.type === "gate") { %>
 
-    <% }) %>
+                <p><%= blokk.sporsmal %></p>
+
+                <input
+                    type="text"
+                    name="svar[<%= index %>][valgtSvar]"
+                    required
+                >
+
+            <% } else if (blokk.type === "quiz") { %>
+
+                <p><%= blokk.sporsmal %></p>
+
+                <% blokk.svar.forEach(alternativ => { %>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="svar[<%= index %>][valgtSvar]"
+                            value="<%= alternativ %>"
+                            required
+                        >
+
+                        <%= alternativ %>
+                    </label>
+
+                    <br>
+
+                <% }) %>
+
+            <% } %>
+
+            <% if (blokk.type === "gate" || blokk.type === "quiz") { %>
+
+                <input
+                    type="hidden"
+                    name="svar[<%= index %>][blokkIndex]"
+                    value="<%= index %>"
+                >
+
+            <% } %>
+
+        <% }) %>
+
+        <button type="submit">Send inn svar</button>
+
+    </form>
+
 </body>
