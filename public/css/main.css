@@ -133,6 +133,8 @@ main {
 .luke-lukket .door {
     border: 2px dotted black;
     background-color: rgba(255, 255, 255, 0.253);
+    color: white;
+    backdrop-filter: blur(4px);
 }
 
 .luke-lukket {
