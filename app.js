@@ -144,7 +144,12 @@ app.post("/luke/:nr/svar", async (req, res) => {
         {
             user: user._id,
             luke: luke._id,
-            svar: svar
+            $push: {
+                svar: {
+                    blokkIndex: Number(req.body.blokkIndex),
+                    valgtSvar: svar
+                }
+            }
         },
         {
             upsert: true,
