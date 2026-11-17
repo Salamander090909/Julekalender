@@ -150,7 +150,7 @@ main {
     background-color: var(--darkRed);
     color: var(--lukeTextColor);
     box-shadow: 0 0 50px rgba(255, 215, 0, 0.7);
-    animation: bigOpen 2s ease forwards;
+    animation: bigOpen 2s ease-out 1s forwards;
 }
 
 .luke-i-dag {
@@ -159,7 +159,7 @@ main {
 }
 
 .luke-åpnet .door {
-    animation: open 2s ease forwards;
+    animation: open 2s ease-out 1s forwards;
     background-color: var(--darkRed);
 }
 
