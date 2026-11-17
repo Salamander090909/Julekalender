@@ -1,9 +1,9 @@
 const express = require("express");
+const cookieParser = require("cookie-parser")
 require("dotenv").config();
 const env = require("dotenv")
 const mongoose = require("mongoose")
 const jwt = require("jsonwebtoken")
-const cookieParser = require("cookie-parser")
 
 const User = require("./models/User")
 const Luke = require("./models/Luke");
@@ -74,18 +74,25 @@ app.get("/luke/:nr", async (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-    const { email } = req.body;
+    const email = req.body.email?.trim().toLowerCase();
 
-    const username = (
-        email.split("@")[0]
-    )
+    const existing = await User.findOne({email});
 
+    if (existing) {
+        return res.status(409).render("register", {
+            error: "Denne e-posten er allerede registrert."
+        });
+    }
+        
+    const username = email.split("@")[0];
+    
     const user = new User({
         email,
         username
     });
-
+    
     await user.save();
+
 
     const token = jwt.sign(
         { userId: user._id },

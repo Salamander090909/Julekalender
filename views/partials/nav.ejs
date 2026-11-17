@@ -2,12 +2,11 @@
     <div class="content">
         <a href="/"><h1>Bleiker Julekalender</h1></a>
         <ul>
-            <% if ( user ) { %>
+            <% if (typeof user !== "undefined" && user) { %>
                 <li><p><%= user.email %></p></li>
             <% } else { %>
                 <li><a href="/register">Registrer deg</a></li>
             <% } %>
         </ul>
-
     </div>
 </nav>
