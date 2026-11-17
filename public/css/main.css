@@ -135,6 +135,7 @@ main {
     background-color: rgba(255, 255, 255, 0.253);
     color: white;
     backdrop-filter: blur(4px);
+
 }
 
 .luke-lukket {
@@ -156,6 +157,7 @@ main {
 .luke-i-dag {
     background-color: rgb(248, 239, 239);
     box-shadow: 0 0 50px rgba(255, 215, 0, 0.7);
+    z-index: 5;
 }
 
 .luke-åpnet .door {
