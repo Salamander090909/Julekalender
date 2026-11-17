@@ -67,6 +67,12 @@ ul {
     align-items: center;
     list-style: none;
     color: white;
+    margin: 0;
+    gap: 20px;
+}
+
+li p {
+    font-family: var(--h1font);
 }
 
 main {

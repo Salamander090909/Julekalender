@@ -22,10 +22,24 @@ mongoose.connect(process.env.MONGODB_URI);
 app.get("/", async (req, res) => {
     const luker = await Luke.find().sort({ nr: 1 });
 
-    const idag = new Date("2026-12-22"); 
+    const idag = new Date("2026-12-5"); 
     const dag = idag.getMonth() === 11 ? idag.getDate() : 0;
 
-    res.render('index', { luker, dag });
+    let user = null
+
+    const token = req.cookies.jwt;
+
+    if(token) {
+        try {
+            const decoded = jwt.verify(token, process.env.SECRET_JWT);
+            user = await User.findById(decoded.userId);
+        } catch (error) {
+            user = null
+        }
+    }
+    console.log(req.cookies);
+
+    res.render('index', { luker, dag, user });
 });
 
 app.get("/register", (req, res) => {
@@ -62,8 +76,13 @@ app.get("/luke/:nr", async (req, res) => {
 app.post("/register", async (req, res) => {
     const { email } = req.body;
 
+    const username = (
+        email.split("@")[0]
+    )
+
     const user = new User({
-        email
+        email,
+        username
     });
 
     await user.save();
