@@ -1,17 +1,20 @@
 <%- include("./partials/head.ejs") %>
 <body class="registerBody">
-    <form action="" method="post">
-        <label for="email"></label>
-        <input 
-            type="email" 
-            id="email" 
-            name="email"
-            pattern="+@afk.no" 
-            placeholder="navn@afk.no" 
-            required 
-        />
+    <div class="wrapper">
+        <form action="" method="post">
+            <label for="email"></label>
+            <input 
+                type="email" 
+                id="email" 
+                name="email"
+                pattern="+@afk.no" 
+                placeholder="navn@afk.no" 
+                required 
+            />
+    
+            <button>Registrer Deg</button>
+        </form>
 
-        <button>Registrer Deg</button>
-    </form>
+    </div>
 </body>
 </html>
