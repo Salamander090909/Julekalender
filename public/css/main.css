@@ -12,8 +12,8 @@
     --borderRadius: 10px;
 
 
-    --kalenderWidth: calc(50% - 60px);
-    --velkommenCardWidth: calc(45%);
+    --kalenderWidth: calc(65% - 60px);
+    --velkommenCardWidth: calc(30%);
 
     --textColor: #ffe5e5;
 
