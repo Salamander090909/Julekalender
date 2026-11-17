@@ -145,8 +145,14 @@ main {
 }
 
 .luke-i-dag .door {
+    background-color: var(--darkRed);
+    color: var(--lukeTextColor);
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.7);
+    animation: bigOpen 2s ease forwards;
+}
+
+.luke-i-dag {
     background-color: rgb(248, 239, 239);
-    color: black;
     box-shadow: 0 0 50px rgba(255, 215, 0, 0.7);
 }
 
@@ -182,6 +188,11 @@ main {
 @keyframes open {
     from { transform: rotateY(0deg); }
     to   { transform: rotateY(-30deg); }
+}
+
+@keyframes bigOpen {
+    from { transform: rotateY(0deg); }
+    to   { transform: rotateY(-110deg); }
 }
 
 .velkommenCard {
