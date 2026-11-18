@@ -24,7 +24,7 @@ app.get("/", async (req, res) => {
     console.log("Antall luker:", luker.length);
     console.log("Luker:", luker);
     
-    const idag = new Date("2026.12.15"); 
+    const idag = new Date("2026.12.3"); 
     const dag = idag.getMonth() === 11 ? idag.getDate() : 0;
 
     let user = null
@@ -123,7 +123,7 @@ app.post("/admin/luke/:nr/trekk", requireAdmin, async (req, res) => {
 app.get("/luke/:nr", async (req, res) => {
     const nr = Number(req.params.nr);
     const luke = await Luke.findOne({ nr });
-    const idag = new Date("2026.12.15"); 
+    const idag = new Date("2026.12.3"); 
     const dag = idag.getMonth() === 11 ? idag.getDate() : 0;
 
     if (!luke) {

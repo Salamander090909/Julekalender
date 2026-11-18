@@ -427,6 +427,34 @@ main {
 }
 
 
+.alternativ {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.3rem;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px black;
+}
+
+.alternativ:hover {
+    transform: translateY(-1px);
+}
+
+.alternativ input[type="radio"] {
+    accent-color: var(--darkRed);
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.alternativ:has(input:checked) {
+    border: 2px solid var(--darkRed);
+}
+
+
 @media screen and (max-width: 1000px) {    
     .indexMain {
         display: flex;
