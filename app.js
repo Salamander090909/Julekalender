@@ -153,23 +153,15 @@ app.get("/luke/:nr", async (req, res) => {
 app.post("/register", async (req, res) => {
     const email = req.body.email?.trim().toLowerCase();
 
-    const existing = await User.findOne({email});
+    let user = await User.findOne({ email });
 
-    if (existing) {
-        return res.status(409).render("register", {
-            error: "Denne e-posten er allerede registrert."
+    if (!user) {
+        user = new User({
+            email,
+            username: email.split("@")[0]
         });
+        await user.save();
     }
-        
-    const username = email.split("@")[0];
-    
-    const user = new User({
-        email,
-        username
-    });
-    
-    await user.save();
-
 
     const token = jwt.sign(
         { userId: user._id },
