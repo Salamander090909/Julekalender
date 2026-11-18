@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken")
 
 const User = require("./models/User")
 const Luke = require("./models/Luke");
-const Besvarelse = require("./models/Besvarelse")
+const Besvarelse = require("./models/Besvarelse");
 
 const app = express()
 
@@ -50,7 +50,6 @@ app.get("/register", (req, res) => {
 app.get("/luke/:nr", async (req, res) => {
     const nr = Number(req.params.nr);
     const luke = await Luke.findOne({ nr });
-    console.log(luke.toObject());   
     const idag = new Date("2026.12.15"); 
     const dag = idag.getMonth() === 11 ? idag.getDate() : 0;
 
@@ -72,7 +71,10 @@ app.get("/luke/:nr", async (req, res) => {
         return res.redirect("/register")
     }
 
-    res.render("kalenderQuiz", { luke, user, dag, svar: null });
+    const besvarelse = await Besvarelse.findOne({user: user._id, luke: luke._id});
+    const svar = besvarelse ? besvarelse.svar[0].valgtSvar : null;
+
+    res.render("kalenderQuiz", { luke, user, dag, svar });
 
 });
 
@@ -139,32 +141,17 @@ app.post("/luke/:nr/svar", async (req, res) => {
 
     const { svar } = req.body;
 
-    await Besvarelse.findOneAndUpdate(
-        {
-            user: user._id,
-            luke: luke._id
-        },
-        {
+    const eksisterende = await Besvarelse.findOne({ user: user._id, luke: luke._id });
+
+    if (!eksisterende) {
+        await Besvarelse.create({
             user: user._id,
             luke: luke._id,
-            $push: {
-                svar: {
-                    valgtSvar: svar,
-                    riktigSvar: luke.correct_answer
-                }
-            }
-        },
-        {
-            upsert: true,
-            new: true
-        }
-    );
+            svar: [{ valgtSvar: svar }]
+        });
+    }
 
-    res.render("kalenderQuiz", {
-        luke,
-        user,
-        svar
-    })
+    res.redirect(`/luke/${luke.nr}`);
 })
 
 
