@@ -156,6 +156,7 @@ main {
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: var(--borderRadius);
+    box-shadow: 0 0 20px white;
 }
 
 .bred {
@@ -261,12 +262,24 @@ main {
     flex-direction: column;
     width: var(--velkommenCardWidth);
     border: 4px solid var(--mainBorder);
-    background-color: white;
+    background-color: var(--mainBackground);
+    box-shadow: 1px 1px 20px white;
     padding: var(--cardPadding);
     padding-top: 10px;
     border-radius: var(--borderRadius);
     backdrop-filter: blur(12px);
     font-family: var(--h1font);
+    color: white;
+}
+
+.velkommenCard ol {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+.velkommenCard ol,h3,p {
+    opacity: 0.85;
 }
 
 
@@ -467,8 +480,10 @@ main {
     .kalenderBox {
         width: 100%;
         grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: 3.5rem;
         background-image: none;
         border: none;
+        box-shadow: none;
     }
 
     .velkommenCard {
