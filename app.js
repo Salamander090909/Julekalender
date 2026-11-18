@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGODB_URI);
 app.get("/", async (req, res) => {
     const luker = await Luke.find().sort({ nr: 1 });
 
-    const idag = new Date("2026.12.14"); 
+    const idag = new Date("2026.12.15"); 
     const dag = idag.getMonth() === 11 ? idag.getDate() : 0;
 
     let user = null
@@ -50,7 +50,8 @@ app.get("/register", (req, res) => {
 app.get("/luke/:nr", async (req, res) => {
     const nr = Number(req.params.nr);
     const luke = await Luke.findOne({ nr });
-    const idag = new Date("2026.12.14"); 
+    console.log(luke.toObject());   
+    const idag = new Date("2026.12.15"); 
     const dag = idag.getMonth() === 11 ? idag.getDate() : 0;
 
     if (!luke) {
@@ -148,8 +149,8 @@ app.post("/luke/:nr/svar", async (req, res) => {
             luke: luke._id,
             $push: {
                 svar: {
-                    blokkIndex: Number(req.body.blokkIndex),
-                    valgtSvar: svar
+                    valgtSvar: svar,
+                    riktigSvar: luke.correct_answer
                 }
             }
         },

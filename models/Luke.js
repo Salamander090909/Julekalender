@@ -1,18 +1,16 @@
 const mongoose = require("mongoose");
 
-const lukeSchema = mongoose.Schema({
+const lukeSchema = new mongoose.Schema({
     nr: Number,
-    klasse: String,  
+    klasse: String,
     tittel: String,
-    blokker: [{
-        type: { type: String }, 
-        tekst: String,
-        url: String,
-        spørsmål: String,
-        svar: [String]
-    }]
+    type: [String],
+    question: String,
+    options: [String],
+    video_url: String,
+    correct_answer: String
 });
 
-const luke = mongoose.model("luke", lukeSchema)
+const Luke = mongoose.model("luke", lukeSchema);
 
-module.exports = luke
+module.exports = Luke;

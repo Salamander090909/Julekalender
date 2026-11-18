@@ -1,45 +1,106 @@
 <%- include("./partials/head") %>
-
 <body>
 
-    <h1><%= luke.tittel %></h1>
-    <p>Dette er luke nummer <%= luke.nr %></p>
+    <main class="quizContainer">
 
-    <form action="/luke/<%= luke.nr %>/svar" method="POST">
+        <section class="quizCard">
 
-        <% luke.blokker.forEach((blokk, index) => { %>
+            <h1>Luke <%= luke.nr %></h1>
 
-            <% if (blokk.type === "tekst") { %>
+            <p>Dette er luke nummer <%= luke.nr %></p>
 
-                <p><%= blokk.tekst %></p>
+            <form action="/luke/<%= luke.nr %>/svar" method="POST">
 
-            <% } else if (blokk.type === "video") { %>
+                <h2><%= luke.question %></h2>
 
-                <iframe
-                    src="<%= blokk.url %>"
-                    allowfullscreen>
-                </iframe>
+                <% if (luke.type.includes("multiple_choice")) { %>
 
-            <% } else if (blokk.type === "bilde") { %>
+                    <div class="alternativer">
 
-                <img
-                    src="<%= blokk.url %>"
-                    alt="Bilde for luke <%= luke.nr %>"
-                >
+                        <% if (luke.options && luke.options.length > 0) { %>
 
-            <% } %>
+                            <% luke.options.forEach((option) => { %>
 
-            <% if (dag > luke.nr) { %>
-                <h1>Vinner av denne dagen er ...</h1>
-            <% } %>
-            
-            <input type="hidden" name="blokkIndex" value="<%= index %>">
-        <% }) %>
+                                <label class="alternativ">
 
-        <input type="text" name="svar" placeholder="Svaret ditt ..." required>
+                                    <input
+                                        type="radio"
+                                        name="svar"
+                                        value="<%= option %>"
+                                        required
+                                    >
 
-        <button type="submit">Send inn svar</button>
+                                    <span><%= option %></span>
 
-    </form>
+                                </label>
+
+                            <% }) %>
+
+                        <% } else { %>
+
+                            <p>Ingen svaralternativer ble funnet.</p>
+
+                        <% } %>
+
+                    </div>
+
+                <% } else if (luke.type.includes("open")) { %>
+
+                    <div class="openSvar">
+
+                        <input
+                            type="text"
+                            name="svar"
+                            placeholder="Skriv svaret ditt..."
+                            required
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+                <% } else if (luke.type.includes("video")) { %>
+
+                    <div class="videoSvar">
+
+                        <% if (luke.video_url) { %>
+
+                            <div class="videoContainer">
+
+                                <iframe
+                                    src="<%= luke.video_url.replace('watch?v=', 'embed/') %>"
+                                    title="Quizvideo"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+
+                            </div>
+
+                        <% } %>
+
+                        <input
+                            type="text"
+                            name="svar"
+                            placeholder="Hva er svaret?"
+                            required
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+                <% } else { %>
+
+                    <p>Fant ikke en gyldig spørsmålstype.</p>
+
+                <% } %>
+
+                <button type="submit" class="sendSvarKnapp">
+                    Send inn svar
+                </button>
+
+            </form>
+
+        </section>
+
+    </main>
 
 </body>
