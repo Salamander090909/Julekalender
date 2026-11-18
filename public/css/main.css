@@ -253,7 +253,7 @@ main {
 
 @keyframes bigOpen {
     from { transform: rotateY(0deg); }
-    to   { transform: rotateY(-140deg); }
+    to   { transform: rotateY(-110deg); }
 }
 
 .velkommenCard {
@@ -384,6 +384,16 @@ main {
     scale: 1.03;
 }
 
+.videoContainer {
+    margin: 10px;
+    width: 100%;
+}
+
+.videoContainer iframe {
+    border-radius: var(--borderRadius);
+    border: 1px solid black;
+}
+
 .kalenderBody {
     display: flex;
     align-items: center;
@@ -418,18 +428,48 @@ main {
 
 
 @media screen and (max-width: 1000px) {    
-    main {
+    .indexMain {
+        display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
+        background-image: url(/img/christmasBackground.png);
     }
 
     .kalenderBox {
-        width: calc(100% - 60px);
+        width: 100%;
         grid-template-columns: repeat(3, 1fr);
+        background-image: none;
+        border: none;
     }
 
     .velkommenCard {
-        width: 80%;
+        width: 90%;
+    }
+
+    nav {
+        padding-right: 10px;
+    }
+
+    nav h1 {
+        font-size: 25px;
+    }
+
+    nav ul {
+        margin: 0;
+    }
+
+    @keyframes bigOpen {
+        from { transform: rotateY(0deg); }
+        to   { transform: rotateY(-60deg); }
+    }
+
+    .quizCard {
+        width: 90%;
+    }
+
+    .videoContainer {
+        margin-left: 0;
     }
 
 
