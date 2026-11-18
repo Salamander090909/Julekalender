@@ -1,104 +1,108 @@
-<%- include("./partials/head") %>
+<%- include("./partials/head.ejs") %>
 <body>
+    <%- include("./partials/nav.ejs") %>
 
     <main class="quizContainer">
 
         <section class="quizCard">
 
             <h1>Luke <%= luke.nr %></h1>
+            <h2><%= luke.question %></h2>
+            
+            <% if (typeof svar === "undefined" || svar === null) { %>
+                <form action="/luke/<%= luke.nr %>/svar" method="POST">
 
-            <p>Dette er luke nummer <%= luke.nr %></p>
 
-            <form action="/luke/<%= luke.nr %>/svar" method="POST">
+                    <% if (luke.type.includes("multiple_choice")) { %>
 
-                <h2><%= luke.question %></h2>
+                        <div class="alternativer">
 
-                <% if (luke.type.includes("multiple_choice")) { %>
+                            <% if (luke.options && luke.options.length > 0) { %>
 
-                    <div class="alternativer">
+                                <% luke.options.forEach((option) => { %>
 
-                        <% if (luke.options && luke.options.length > 0) { %>
+                                    <label class="alternativ">
 
-                            <% luke.options.forEach((option) => { %>
+                                        <input
+                                            type="radio"
+                                            name="svar"
+                                            value="<%= option %>"
+                                            required
+                                        >
 
-                                <label class="alternativ">
+                                        <span><%= option %></span>
 
-                                    <input
-                                        type="radio"
-                                        name="svar"
-                                        value="<%= option %>"
-                                        required
-                                    >
+                                    </label>
 
-                                    <span><%= option %></span>
+                                <% }) %>
 
-                                </label>
+                            <% } else { %>
 
-                            <% }) %>
+                                <p>Ingen svaralternativer ble funnet.</p>
 
-                        <% } else { %>
+                            <% } %>
 
-                            <p>Ingen svaralternativer ble funnet.</p>
+                        </div>
 
-                        <% } %>
+                    <% } else if (luke.type.includes("open")) { %>
 
-                    </div>
+                        <div class="openSvar">
 
-                <% } else if (luke.type.includes("open")) { %>
+                            <input
+                                type="text"
+                                name="svar"
+                                placeholder="Skriv svaret ditt..."
+                                required
+                                autocomplete="off"
+                            >
 
-                    <div class="openSvar">
+                        </div>
 
-                        <input
-                            type="text"
-                            name="svar"
-                            placeholder="Skriv svaret ditt..."
-                            required
-                            autocomplete="off"
-                        >
+                    <% } else if (luke.type.includes("video")) { %>
 
-                    </div>
+                        <div class="videoSvar">
 
-                <% } else if (luke.type.includes("video")) { %>
+                            <% if (luke.video_url) { %>
 
-                    <div class="videoSvar">
+                                <div class="videoContainer">
 
-                        <% if (luke.video_url) { %>
+                                    <iframe
+                                        src="<%= luke.video_url.replace('watch?v=', 'embed/') %>"
+                                        title="Quizvideo"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen>
+                                    </iframe>
 
-                            <div class="videoContainer">
+                                </div>
 
-                                <iframe
-                                    src="<%= luke.video_url.replace('watch?v=', 'embed/') %>"
-                                    title="Quizvideo"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen>
-                                </iframe>
+                            <% } %>
 
-                            </div>
+                            <input
+                                type="text"
+                                name="svar"
+                                placeholder="Hva er svaret?"
+                                required
+                                autocomplete="off"
+                            >
 
-                        <% } %>
+                        </div>
 
-                        <input
-                            type="text"
-                            name="svar"
-                            placeholder="Hva er svaret?"
-                            required
-                            autocomplete="off"
-                        >
+                    <% } else { %>
 
-                    </div>
+                        <p>Fant ikke en gyldig spørsmålstype.</p>
 
-                <% } else { %>
+                    <% } %>
 
-                    <p>Fant ikke en gyldig spørsmålstype.</p>
+                    <button type="submit" class="sendSvarKnapp">
+                        Send inn svar
+                    </button>
 
-                <% } %>
-
-                <button type="submit" class="sendSvarKnapp">
-                    Send inn svar
-                </button>
-
-            </form>
-
+                    
+                    
+                </form>
+            <% } else { %>
+                <p>Du svarte: <span><%= svar %></span></p>
+            <% } %>
         </section>
 
     </main>

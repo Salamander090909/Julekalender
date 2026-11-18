@@ -72,7 +72,7 @@ app.get("/luke/:nr", async (req, res) => {
         return res.redirect("/register")
     }
 
-    res.render("kalenderQuiz", { luke, user, dag });
+    res.render("kalenderQuiz", { luke, user, dag, svar: null });
 
 });
 
@@ -159,7 +159,12 @@ app.post("/luke/:nr/svar", async (req, res) => {
             new: true
         }
     );
-    res.redirect("/")
+
+    res.render("kalenderQuiz", {
+        luke,
+        user,
+        svar
+    })
 })
 
 
