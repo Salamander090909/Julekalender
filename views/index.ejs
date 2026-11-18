@@ -13,7 +13,7 @@
                             : luke.nr === dag ? 'i-dag'
                             : 'lukket';
             %>
-                <a href="<%= tilstand === 'lukket' || tilstand === 'åpnet' ? '#' : '/luke/' + luke.nr %>"
+                <a href="<%= tilstand === 'lukket' ? '#' : '/luke/' + luke.nr %>"
                 class="luke <%= luke.klasse %> luke-<%= tilstand %>">
                     <span class="door"><%= luke.nr %></span>
                 </a>

@@ -253,7 +253,7 @@ main {
 
 @keyframes bigOpen {
     from { transform: rotateY(0deg); }
-    to   { transform: rotateY(-110deg); }
+    to   { transform: rotateY(-100deg); }
 }
 
 .velkommenCard {
