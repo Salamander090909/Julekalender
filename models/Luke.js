@@ -8,7 +8,11 @@ const lukeSchema = new mongoose.Schema({
     question: String,
     options: [String],
     video_url: String,
-    correct_answer: String
+    correct_answer: String,
+    vinner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user"
+    }
 });
 
 const Luke = mongoose.model("luke", lukeSchema);

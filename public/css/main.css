@@ -279,8 +279,87 @@ main {
 }
 
 
+.admin {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0;
+    padding: 0 20px 40px;
+    color: var(--textColor);
+}
+
+.admin-tittel {
+    font-family: var(--h1font);
+    margin: 0;
+}
+
 .luke-seksjon {
-    color: white;
+    background-color: rgba(255, 0, 0, 0.537);
+    border: 1px solid var(--mainBorder);
+    border-radius: var(--borderRadius);
+}
+
+.luke-info {
+    padding: var(--cardPadding);
+}
+
+.luke-tittel {
+    font-family: var(--h1font);
+    margin: 0;
+}
+
+.luke-fasit {
+    color: lightgreen;
+}
+
+.svar-liste {
+    display: flex;
+    flex-direction: column;
+}
+
+.svar-rad {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 14px var(--cardPadding);
+}
+
+
+.svar-rad:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.svar-bruker {
+    font-size: 0.9rem;
+    word-break: break-word;
+}
+
+.svar-valgt {
+    font-weight: bold;
+}
+
+.svar-status {
+    font-size: 0.9rem;
+    opacity: 0.85;
+}
+
+.svar-form {
+    margin: 0;
+}
+
+.svarBtn {
+    cursor: pointer;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background-color: #2e7d4f;
+    color: #ffffff;
+    font-weight: bold;
+    white-space: nowrap;
+    transition: filter 0.15s;
 }
 
 

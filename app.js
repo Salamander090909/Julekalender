@@ -64,20 +64,28 @@ async function requireAdmin(req, res, next) {
 }
 
 app.get("/admin", requireAdmin, async (req, res) => {
-    const luker = await Luke.find().sort({ nr: 1 });
+    const luker = await Luke.find().sort({ nr: 1 }).populate("vinner");
     const besvarelser = await Besvarelse.find().populate("user").sort({ createdAt: 1 });
 
-    const grupper = luker.map(luke => ({
+    const alle = luker.map(luke => ({
         luke,
         svar: besvarelser.filter(b => b.user && b.luke.equals(luke._id))
     })).filter(g => g.svar.length > 0);
 
-    res.render("admin/admin", { user: req.user, grupper });
+    const valgt = Number(req.query.luke);
+    const grupper = valgt ? alle.filter(g => g.luke.nr === valgt) : alle;
+
+    res.render("admin/admin", {
+        user: req.user,
+        grupper,
+        alleLuker: alle.map(g => g.luke),
+        valgt
+    });
 });
 
 app.post("/admin/besvarelser/:id/toggle", requireAdmin, async (req, res) => {
     if (!mongoose.isValidObjectId(req.params.id)) {
-        return res.redirect("/admin");
+        return res.redirect("/admin"); 
     }
 
     const besvarelse = await Besvarelse.findById(req.params.id);
@@ -87,8 +95,27 @@ app.post("/admin/besvarelser/:id/toggle", requireAdmin, async (req, res) => {
         await besvarelse.save();
     }
 
-    res.redirect("/admin");
+    res.redirect(req.get("Referer") || "/admin");
 });
+
+app.post("/admin/luke/:nr/trekk", requireAdmin, async (req, res) => {
+    const luke = await Luke.findOne({ nr: Number(req.params.nr) });
+
+    if (!luke) return res.redirect("/admin");   // denne beholder du
+
+    const riktige = await Besvarelse.find({ luke: luke._id, riktig: true });
+
+    if (riktige.length === 0) return res.redirect("/admin");   // denne beholder du
+
+    const tilfeldig = riktige[Math.floor(Math.random() * riktige.length)];
+
+    luke.vinner = tilfeldig.user;
+    await luke.save();
+
+    res.redirect(req.get("Referer") || "/admin");   // byttet ut
+});
+
+
 
 
 app.get("/luke/:nr", async (req, res) => {
@@ -121,6 +148,7 @@ app.get("/luke/:nr", async (req, res) => {
     res.render("kalenderQuiz", { luke, user, dag, svar });
 
 });
+
 
 app.post("/register", async (req, res) => {
     const email = req.body.email?.trim().toLowerCase();
