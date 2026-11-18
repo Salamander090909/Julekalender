@@ -9,7 +9,7 @@
             <h1>Luke <%= luke.nr %></h1>
             <h2><%= luke.question %></h2>
             
-            <% if (typeof svar === "undefined" || svar === null) { %>
+            <% if (typeof svar === "undefined" || svar === null && dag === luke.nr) { %>
                 <form action="/luke/<%= luke.nr %>/svar" method="POST">
 
 
@@ -102,6 +102,10 @@
                 </form>
             <% } else { %>
                 <p class="dittSvar">Du svarte: <span><%= svar %></span></p>
+            <% } %>
+
+            <% if (typeof vinner !== "undefined" && vinner) { %>
+                <p>Vinneren er: <span><%= vinner.username %></span></p>
             <% } %>
         </section>
 

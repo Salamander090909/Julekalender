@@ -120,13 +120,15 @@ app.post("/admin/luke/:nr/trekk", requireAdmin, async (req, res) => {
 
 app.get("/luke/:nr", async (req, res) => {
     const nr = Number(req.params.nr);
-    const luke = await Luke.findOne({ nr });
+    const luke = await Luke.findOne({ nr }).populate("vinner");
     const idag = new Date("2026.12.11"); 
     const dag = idag.getMonth() === 11 ? idag.getDate() : 0;
 
     if (!luke) {
         return res.status(404).send("Fant ikke luken");
     }
+
+    const vinner = luke.vinner
 
     const token = req.cookies.jwt;
 
@@ -145,7 +147,7 @@ app.get("/luke/:nr", async (req, res) => {
     const besvarelse = await Besvarelse.findOne({user: user._id, luke: luke._id});
     const svar = besvarelse ? besvarelse.svar[0].valgtSvar : null;
 
-    res.render("kalenderQuiz", { luke, user, dag, svar });
+    res.render("kalenderQuiz", { luke, user, dag, svar, vinner });
 
 });
 
