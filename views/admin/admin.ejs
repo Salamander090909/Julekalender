@@ -1,0 +1,50 @@
+<%- include("../partials/head.ejs") %>
+<body>
+    <%- include("../partials/nav.ejs") %>
+
+    <main class="admin">
+        <h1 class="admin-tittel">Svar fra brukere</h1>
+
+        <% if (grupper.length === 0) { %>
+            <p class="ingen-svar">Ingen har svart ennå.</p>
+        <% } %>
+
+        <% grupper.forEach(g => { %>
+            <section class="luke-seksjon">
+
+                <div class="luke-info">
+                    <h2 class="luke-tittel">Luke <%= g.luke.nr %>: <%= g.luke.tittel %></h2>
+                    <p class="luke-sporsmal"><strong>Spørsmål:</strong> <%= g.luke.question %></p>
+                    <p class="luke-fasit"><strong>Riktig svar:</strong> <%= g.luke.correct_answer %></p>
+                </div>
+
+                <div class="svar-liste">
+                    <% g.svar.forEach(b => { %>
+                        <div class="svar-rad <%= b.riktig ? 'riktig' : '' %>">
+
+                            <div class="svar-bruker">
+                                (<%= b.user.email %>)
+                            </div>
+
+                            <div class="svar-valgt">
+                                <p>Bruker svarte: </p><%= b.svar[0] ? b.svar[0].valgtSvar : "" %>
+                            </div>
+
+                            <div class="svar-status">
+                                <%= b.riktig ? "✅ Riktig" : "Ikke markert" %>
+                            </div>
+
+                            <form class="svar-form" method="POST" action="/admin/besvarelser/<%= b._id %>/toggle">
+                                <button class="svar-knapp" type="submit">
+                                    <%= b.riktig ? "Fjern" : "Marker riktig" %>
+                                </button>
+                            </form>
+
+                        </div>
+                    <% }) %>
+                </div>
+
+            </section>
+        <% }) %>
+    </main>
+</body>

@@ -46,6 +46,50 @@ app.get("/register", (req, res) => {
     res.render("register", {user: null})
 })
 
+async function requireAdmin(req, res, next) {
+    try {
+        const token = req.cookies.jwt;
+        if (!token) return res.redirect("/");
+
+        const decoded = jwt.verify(token, process.env.SECRET_JWT);
+        const user = await User.findById(decoded.userId);
+
+        if (!user || user.role !== "admin") return res.redirect("/");
+
+        req.user = user;
+        next();
+    } catch (error) {
+        res.redirect("/");
+    }
+}
+
+app.get("/admin", requireAdmin, async (req, res) => {
+    const luker = await Luke.find().sort({ nr: 1 });
+    const besvarelser = await Besvarelse.find().populate("user").sort({ createdAt: 1 });
+
+    const grupper = luker.map(luke => ({
+        luke,
+        svar: besvarelser.filter(b => b.user && b.luke.equals(luke._id))
+    })).filter(g => g.svar.length > 0);
+
+    res.render("admin/admin", { user: req.user, grupper });
+});
+
+app.post("/admin/besvarelser/:id/toggle", requireAdmin, async (req, res) => {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+        return res.redirect("/admin");
+    }
+
+    const besvarelse = await Besvarelse.findById(req.params.id);
+
+    if (besvarelse) {
+        besvarelse.riktig = !besvarelse.riktig;
+        await besvarelse.save();
+    }
+
+    res.redirect("/admin");
+});
+
 
 app.get("/luke/:nr", async (req, res) => {
     const nr = Number(req.params.nr);

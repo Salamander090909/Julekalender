@@ -279,8 +279,9 @@ main {
 }
 
 
-
-
+.luke-seksjon {
+    color: white;
+}
 
 
 @media screen and (max-width: 1000px) {    

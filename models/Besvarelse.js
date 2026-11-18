@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const besvarelseSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "user",
         required: true
     },
 
@@ -16,7 +16,12 @@ const besvarelseSchema = mongoose.Schema({
     svar: [{
         blokkIndex: Number,
         valgtSvar: String
-    }]
+    }],
+
+    riktig: {
+        type: Boolean,
+        default: false
+    }
 
 }, { timestamps: true });
 
