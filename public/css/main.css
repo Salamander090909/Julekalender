@@ -218,10 +218,6 @@ main {
     z-index: 5;
 }
 
-.luke-åpnet .door {
-    animation: open 2s ease-out 1s forwards;
-    background-color: var(--darkRed);
-}
 
 @keyframes shake {
   0% { transform: translate(1px, 1px) rotate(0deg); }
@@ -247,14 +243,9 @@ main {
     text-shadow: 0.5px 0.5px black;
 }
 
-@keyframes open {
-    from { transform: rotateY(0deg); }
-    to   { transform: rotateY(-30deg); }
-}
-
 @keyframes bigOpen {
     from { transform: rotateY(0deg); }
-    to   { transform: rotateY(-100deg); }
+    to   { transform: rotateY(-110deg); }
 }
 
 .velkommenCard {
