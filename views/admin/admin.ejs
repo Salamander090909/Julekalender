@@ -5,8 +5,7 @@
     <main class="admin">
         <h1 class="admin-tittel">Svar fra brukere</h1>
 
-        <!-- Velg luke -->
-        <form method="GET" action="/admin" class="filter-form">
+        <form method="GET" action="" class="filter-form">
             <label for="luke">Vis luke:</label>
             <select name="luke" id="luke" onchange="this.form.submit()">
                 <option value="">Alle luker</option>
@@ -16,6 +15,17 @@
                     </option>
                 <% }) %>
             </select>
+
+            <label for="søt">Søk etter svar:</label>
+            <input 
+            type="text"
+            name="søk"
+            id="søk"
+            placeholder="skriv inn et svar..."
+            value="<%= søk || ``%>"
+            >
+
+            <button type="submit">søk</button>
         </form>
 
         <% grupper.forEach(g => { %>
@@ -26,7 +36,6 @@
                     <p><strong>Spørsmål:</strong> <%= g.luke.question %></p>
                     <p class="luke-fasit"><strong>Riktig svar:</strong> <%= g.luke.correct_answer %></p>
 
-                    <!-- Trekning -->
                     <% const antallRiktige = g.svar.filter(b => b.riktig).length %>
                     <p><strong>Markert riktig:</strong> <%= antallRiktige %></p>
 

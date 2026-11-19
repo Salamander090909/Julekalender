@@ -75,13 +75,25 @@ app.get("/admin", requireAdmin, async (req, res) => {
     })).filter(g => g.svar.length > 0);
 
     const valgt = Number(req.query.luke);
-    const grupper = valgt ? alle.filter(g => g.luke.nr === valgt) : alle;
+    let grupper = valgt ? alle.filter(g => g.luke.nr === valgt) : alle;
+    const søk = req.query.søk || "";
+
+    if(søk) {
+        grupper = grupper.filter(g =>
+            g.svar.some(b =>
+                b.svar.some(s =>
+                    s.valgtSvar.toLowerCase().includes(søk.toLowerCase())
+                )
+            )
+        );
+    }
 
     res.render("admin/admin", {
         user: req.user,
         grupper,
         alleLuker: alle.map(g => g.luke),
-        valgt
+        valgt,
+        søk
     });
 });
 
@@ -103,7 +115,7 @@ app.post("/admin/besvarelser/:id/toggle", requireAdmin, async (req, res) => {
 app.post("/admin/luke/:nr/trekk", requireAdmin, async (req, res) => {
     const luke = await Luke.findOne({ nr: Number(req.params.nr) });
 
-    if (!luke) return res.redirect("/admin");   // denne beholder du
+    if (!luke) return res.redirect("/admin");
 
     const riktige = await Besvarelse.find({ luke: luke._id, riktig: true });
 
@@ -114,7 +126,7 @@ app.post("/admin/luke/:nr/trekk", requireAdmin, async (req, res) => {
     luke.vinner = tilfeldig.user;
     await luke.save();
 
-    res.redirect(req.get("Referer") || "/admin");   // byttet ut
+    res.redirect(req.get("Referer") || "/admin");
 });
 
 
