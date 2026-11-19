@@ -147,7 +147,7 @@ main {
     width: var(--kalenderWidth);
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-auto-rows: 4.5rem;
+    grid-auto-rows: clamp(3.5rem, 9vh, 6rem);
     grid-auto-flow: dense;
     gap: 10px;
     padding: var(--cardPadding);
@@ -263,16 +263,40 @@ main {
     backdrop-filter: blur(12px);
     font-family: var(--h1font);
     color: white;
+    text-align: left;
 }
 
-.velkommenCard ol {
+.velkommenCard h1 {
+    font-size: 42px;
+    margin-bottom: 40px;
+    align-self: center;
+}
+
+.velkommenCard h3 {
+    font-size: 22px;
+    margin-bottom: 30px;
+}
+
+.velkommenCard ul {
     display: flex;
     flex-direction: column;
-    padding-left: 20px;
+    align-items: flex-start;
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 350px;
 }
 
-.velkommenCard ol,h3,p {
-    opacity: 0.85;
+.velkommenCard li {
+    gap: 15px;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.velkommenCard p {
+    text-align: center;
+    margin-top: 35px;
+    font-size: 18px;
 }
 
 
@@ -301,7 +325,6 @@ main {
 .luke-info {
     padding: var(--cardPadding);
 }
-
 .luke-tittel {
     font-family: var(--h1font);
     margin: 0;
@@ -470,14 +493,17 @@ main {
         background-image: url(/img/christmasBackground.png);
     }
 
-    .kalenderBox {
-        width: 100%;
-        grid-template-columns: repeat(3, 1fr);
-        grid-auto-rows: 3.5rem;
-        background-image: none;
-        border: none;
-        box-shadow: none;
-    }
+        .kalenderBox {
+            width: 100%;
+            height: auto;
+            grid-template-rows: none;
+            grid-auto-rows: 3.5rem;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 3.5rem;
+            background-image: none;
+            border: none;
+            box-shadow: none;
+        }
 
     .velkommenCard {
         width: 90%;
