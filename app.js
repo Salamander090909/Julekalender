@@ -68,6 +68,7 @@ async function requireAdmin(req, res, next) {
 app.get("/admin", requireAdmin, async (req, res) => {
     const luker = await Luke.find().sort({ nr: 1 }).populate("vinner");
     const besvarelser = await Besvarelse.find().populate("user").sort({ createdAt: 1 });
+    const users = await User.find();
 
     const alle = luker.map(luke => ({
         luke,
@@ -97,7 +98,8 @@ app.get("/admin", requireAdmin, async (req, res) => {
         grupper,
         alleLuker: alle.map(g => g.luke),
         valgt,
-        søk: req.query.søk || ""
+        søk: req.query.søk || "",
+        users
     });
 });
 

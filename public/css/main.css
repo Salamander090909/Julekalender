@@ -298,16 +298,46 @@ main {
     font-weight: bold;
 }
 
-
 .admin {
     display: flex;
     flex-direction: column;
     gap: 24px;
     width: 100%;
-    max-width: 600px;
-    margin: 0;
+    max-width: 1300px;
+    margin: 0 auto;
     padding: 0 20px 40px;
     color: var(--textColor);
+}
+
+.AdminWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.gruppeListe {
+    display: flex;
+    flex-direction: column; 
+    gap: 24px;
+    flex: 1;
+    min-width: 0;           
+}
+
+.brukerListe {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+}
+
+.brukerListe p {
+    margin: 0;
+    padding: 12px 16px;
+    border: 1px solid var(--mainBorder);
+    border-radius: var(--borderRadius);
+    background-color: var(--ruteCard);
+    word-break: break-word;
 }
 
 .admin-tittel {
@@ -481,6 +511,8 @@ main {
 .alternativ:has(input:checked) {
     border: 2px solid var(--darkRed);
 }
+
+
 
 
 @media screen and (max-width: 1000px) {    

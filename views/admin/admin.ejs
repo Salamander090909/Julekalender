@@ -27,56 +27,68 @@
 
             <button type="submit">søk</button>
         </form>
+        
+        <section class="AdminWrapper">
 
-        <% grupper.forEach(g => { %>
-            <section class="luke-seksjon">
-
-                <div class="luke-info">
-                    <h2 class="luke-tittel">Luke <%= g.luke.nr %>: <%= g.luke.tittel %></h2>
-                    <p><strong>Spørsmål:</strong> <%= g.luke.question %></p>
-                    <p class="luke-fasit"><strong>Riktig svar:</strong> <%= g.luke.correct_answer %></p>
-
-                    <% const antallRiktige = g.svar.filter(b => b.riktig).length %>
-                    <p><strong>Markert riktig:</strong> <%= antallRiktige %></p>
-
-                    <% if (g.luke.vinner) { %>
-                        <p class="luke-vinner">Vinner: <%= g.luke.vinner.email %></p>
-                    <% } %>
-
-                    <form method="POST" action="/admin/luke/<%= g.luke.nr %>/trekk">
-                        <button class="svarBtn" type="submit" <%= antallRiktige === 0 ? "disabled" : "" %>>
-                            <%= g.luke.vinner ? "Trekk på nytt" : "Trekk vinner" %>
-                        </button>
-                    </form>
-                </div>
-
-                <div class="svar-liste">
-                    <% g.svar.forEach(b => { %>
-                        <div class="svar-rad">
-
-                            <div class="svar-bruker">
-                                (<%= b.user.email %>)
+            <div class="gruppeListe">
+                <% grupper.forEach(g => { %>
+                    <section class="luke-seksjon">
+                            
+                            <div class="luke-info">
+                                <h2 class="luke-tittel">Luke <%= g.luke.nr %>: <%= g.luke.tittel %></h2>
+                                <p><strong>Spørsmål:</strong> <%= g.luke.question %></p>
+                                <p class="luke-fasit"><strong>Riktig svar:</strong> <%= g.luke.correct_answer %></p>
+            
+                                <% const antallRiktige = g.svar.filter(b => b.riktig).length %>
+                                <p><strong>Markert riktig:</strong> <%= antallRiktige %></p>
+            
+                                <% if (g.luke.vinner) { %>
+                                    <p class="luke-vinner">Vinner: <%= g.luke.vinner.email %></p>
+                                <% } %>
+            
+                                <form method="POST" action="/admin/luke/<%= g.luke.nr %>/trekk">
+                                    <button class="svarBtn" type="submit" <%= antallRiktige === 0 ? "disabled" : "" %>>
+                                        <%= g.luke.vinner ? "Trekk på nytt" : "Trekk vinner" %>
+                                    </button>
+                                </form>
                             </div>
-
-                            <div class="svar-valgt">
-                                <p>Bruker svarte: </p><%= b.svar[0] ? b.svar[0].valgtSvar : "" %>
+            
+                            <div class="svar-liste">
+                                <% g.svar.forEach(b => { %>
+                                    <div class="svar-rad">
+            
+                                        <div class="svar-bruker">
+                                            (<%= b.user.email %>)
+                                        </div>
+            
+                                        <div class="svar-valgt">
+                                            <p>Bruker svarte: </p><%= b.svar[0] ? b.svar[0].valgtSvar : "" %>
+                                        </div>
+            
+                                        <div class="svar-status">
+                                            <%= b.riktig ? "RIKTIG" : "Ikke markert" %>
+                                        </div>
+            
+                                        <form class="svar-form" method="POST" action="/admin/besvarelser/<%= b._id %>/toggle">
+                                            <button class="svarBtn" type="submit">
+                                                <%= b.riktig ? "Fjern" : "Marker riktig" %>
+                                            </button>
+                                        </form>
+            
+                                    </div>
+                                <% }) %>
                             </div>
+            
+                    </section>
+                <% }) %>
+            </div>
 
-                            <div class="svar-status">
-                                <%= b.riktig ? "RIKTIG" : "Ikke markert" %>
-                            </div>
+            <div class="brukerListe">
+                <% users.forEach(user => { %>
+                    <p><%= user.email %></p>
+                <% }) %>
+            </div>
 
-                            <form class="svar-form" method="POST" action="/admin/besvarelser/<%= b._id %>/toggle">
-                                <button class="svarBtn" type="submit">
-                                    <%= b.riktig ? "Fjern" : "Marker riktig" %>
-                                </button>
-                            </form>
-
-                        </div>
-                    <% }) %>
-                </div>
-
-            </section>
-        <% }) %>
+        </section>
     </main>
 </body>
