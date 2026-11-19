@@ -194,7 +194,12 @@ app.post("/register", async (req, res) => {
         maxAge: 30 * 24 * 60 * 60 * 1000
     });
 
-    res.redirect("/");
+
+    if(user.role === "admin") {
+        return res.redirect("/admin")
+    } else {
+        res.redirect("/");
+    }
 });
 
 app.post("/luke/:nr/svar", async (req, res) => {
@@ -216,6 +221,7 @@ app.post("/luke/:nr/svar", async (req, res) => {
     const decoded = jwt.verify(token, process.env.SECRET_JWT);
 
     const user = await User.findById(decoded.userId);
+
 
     if(!user) {
         return res.redirect("/register")
