@@ -75,17 +75,21 @@ app.get("/admin", requireAdmin, async (req, res) => {
     })).filter(g => g.svar.length > 0);
 
     const valgt = Number(req.query.luke);
-    let grupper = valgt ? alle.filter(g => g.luke.nr === valgt) : alle;
-    const søk = req.query.søk || "";
+    const søk = (req.query.søk || "").trim().toLowerCase();
 
-    if(søk) {
-        grupper = grupper.filter(g =>
-            g.svar.some(b =>
-                b.svar.some(s =>
-                    s.valgtSvar.toLowerCase().includes(søk.toLowerCase())
+    let grupper = valgt ? alle.filter(g => g.luke.nr === valgt) : alle;
+
+    if (søk) {
+        grupper = grupper
+            .map(g => ({
+                luke: g.luke,
+                svar: g.svar.filter(b =>
+                    b.svar.some(s =>
+                        (s.valgtSvar || "").toLowerCase().includes(søk)
+                    )
                 )
-            )
-        );
+            }))
+            .filter(g => g.svar.length > 0);
     }
 
     res.render("admin/admin", {
@@ -93,7 +97,7 @@ app.get("/admin", requireAdmin, async (req, res) => {
         grupper,
         alleLuker: alle.map(g => g.luke),
         valgt,
-        søk
+        søk: req.query.søk || ""
     });
 });
 
