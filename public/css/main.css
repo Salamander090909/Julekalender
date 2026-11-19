@@ -218,6 +218,9 @@ main {
     z-index: 5;
 }
 
+.luke-åpnet .door {
+    background-color: var(--darkRed);
+}
 
 @keyframes shake {
   0% { transform: translate(1px, 1px) rotate(0deg); }
