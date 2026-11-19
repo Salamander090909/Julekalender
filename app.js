@@ -45,7 +45,9 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/register", (req, res) => {
-    res.render("register", {user: null})
+    const fraLuke = req.query.fra === "luke";
+
+    res.render("register", {fraLuke, user: null})
 })
 
 async function requireAdmin(req, res, next) {
@@ -151,7 +153,7 @@ app.get("/luke/:nr", async (req, res) => {
     const token = req.cookies.jwt;
 
     if (!token) {
-        return res.redirect("/register")
+        return res.redirect("/register?fra=luke")
     }
 
     const decoded = jwt.verify(token, process.env.SECRET_JWT);
@@ -159,7 +161,7 @@ app.get("/luke/:nr", async (req, res) => {
     const user = await User.findById(decoded.userId);
 
     if (!user) {
-        return res.redirect("/register")
+        return res.redirect("/register?fra=luke")
     }
 
     const besvarelse = await Besvarelse.findOne({user: user._id, luke: luke._id});

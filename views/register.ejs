@@ -5,7 +5,12 @@
     <div class="wrapper">
         <form action="" method="post" novalidate>
 
-            <h1>Registrer deg</h1>
+            <% if(typeof fraLuke !== "undefined" && fraLuke) { %>
+                <h1>Registrer deg for å åpne luken</h1>
+            <% }else{ %>
+                <h1>Registrer deg</h1>
+            <% } %>
+           
 
             <label for="email"></label>
 
