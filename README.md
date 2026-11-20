@@ -32,4 +32,46 @@
 - **GitHub Projects**: planlegging og oppfølging av oppgaver
 
 ### Andre biblioteker
-- **Embed im**: Java Script for snøen på skjermen 
+- **Embed im**: Java Script for snøen på skjermen
+
+## Installasjon
+    Før du starter å klone prosjekte må du sjekke om du har dette installert:
+- **Git**
+- **Node**
+- **Npm**
+
+Sjekk Git ved å skrive 
+```bash
+git --version
+```
+Sjekk Node og Npm ved å skrive 
+```bash
+node --version
+npm --version
+```
+Vis du fikk en feilmelding, må du laste de ned på deres offesielle nettsider, vis den skrev noe ut kan du gå vidre.
+
+Først kloner du prosjekte
+
+
+## Konfigurasjon
+Hvilke miljøvariabler som trengs i .env (se .env.example).
+
+## Database
+Hvilke collections som finnes, hvilke felt de har og hvordan de henger sammen.
+
+## Oppstart
+Hvordan man starter appen i utviklingsmiljøet.
+
+## Utrulling
+Hvordan prosjektet settes opp på Linux-serveren: programvare, brukere og
+roller, SSH-nøkler, /var/www/, filrettigheter, pm2, IP-plan.
+
+## Brukerveiledning
+Hvordan en vanlig bruker og en administrator bruker løsningen.
+
+## Feilsøking
+Vanlige problemer, løsninger og hvem man kontakter.
+
+## Videre utvikling
+Forbedringer og funksjoner som kunne vært lagt til senere.
