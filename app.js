@@ -147,6 +147,10 @@ app.get("/luke/:nr", async (req, res) => {
     if (!luke) {
         return res.status(404).send("Fant ikke luken");
     }
+  
+    if (luke.nr > dag) {
+        return res.status(403).send("Denne luken kan ikke åpnes ennå");
+    }
 
     const vinner = luke.vinner
 
