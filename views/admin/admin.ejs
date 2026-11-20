@@ -4,7 +4,9 @@
 
     <main class="admin">
         <h1 class="admin-tittel">Svar fra brukere</h1>
-
+        <section class="stats">
+            <div class="stat"><strong><%= stats.svarTotalt %></strong> svar totalt</div>
+        </section>
         <form method="GET" action="" class="filter-form">
             <label for="luke">Vis luke:</label>
             <select name="luke" id="luke" onchange="this.form.submit()">
@@ -41,6 +43,7 @@
             
                                 <% const antallRiktige = g.svar.filter(b => b.riktig).length %>
                                 <p><strong>Markert riktig:</strong> <%= antallRiktige %></p>
+                                <p><strong>Antall svar:</strong> <%= g.svar.length %></p>
             
                                 <% if (g.luke.vinner) { %>
                                     <p class="luke-vinner">Vinner: <%= g.luke.vinner.email %></p>

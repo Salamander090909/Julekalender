@@ -94,6 +94,12 @@ app.get("/admin", requireAdmin, async (req, res) => {
             }))
             .filter(g => g.svar.length > 0);
     }
+    
+
+    const stats = {
+        svarTotalt: await Besvarelse.countDocuments(),
+        antallBrukere: users.length 
+    };
 
     res.render("admin/admin", {
         user: req.user,
@@ -101,7 +107,8 @@ app.get("/admin", requireAdmin, async (req, res) => {
         alleLuker: alle.map(g => g.luke),
         valgt,
         søk: req.query.søk || "",
-        users
+        users,
+        stats
     });
 });
 
