@@ -87,6 +87,8 @@
             </div>
 
             <div class="brukerListe">
+                <h1>Alle brukere</h1>
+                <span><h3>antall: <%=users.length%></h3></span>
                 <% users.forEach(user => { %>
                     <p><%= user.email %></p>
                 <% }) %>

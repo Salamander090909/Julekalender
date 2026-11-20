@@ -347,6 +347,10 @@ main {
     width: 300px;
 }
 
+.brukerListe h1 {
+    margin: 0;
+}
+
 .brukerListe p {
     margin: 0;
     padding: 12px 16px;
@@ -354,6 +358,10 @@ main {
     border-radius: var(--borderRadius);
     background-color: var(--ruteCard);
     word-break: break-word;
+}
+
+.brukerListe span {
+    font-weight: bold;
 }
 
 .admin-tittel {
