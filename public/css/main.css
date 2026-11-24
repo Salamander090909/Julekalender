@@ -595,3 +595,80 @@ main {
 
 
 }
+
+@media screen and (max-width: 800px) {
+
+    body {
+        gap: 16px;
+    }
+
+    .admin {
+        padding: 0 12px 30px;
+        gap: 16px;
+    }
+
+    .admin-tittel {
+        font-size: 1.6rem;
+    }
+
+    .filter-form {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .filter-form select,
+    .filter-form input,
+    .filter-form button {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px; /* hindrer at iOS zoomer inn */
+        border-radius: var(--borderRadius);
+    }
+
+    .AdminWrapper {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+
+    .brukerListe {
+        width: 100%;
+    }
+
+    .luke-info {
+        padding: 16px;
+    }
+
+    .luke-tittel {
+        font-size: 1.2rem;
+    }
+
+    .svar-rad {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 12px 16px;
+        border-top: 1px solid var(--mainBorder);
+    }
+
+    .svar-valgt p {
+        display: inline;
+        margin: 0;
+        font-weight: normal;
+    }
+
+    .svar-form,
+    .svar-form .svarBtn {
+        width: 100%;
+    }
+
+    .svarBtn {
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    nav ul {
+        margin: 0;
+        padding-right: 0.5rem;
+    }
+}
