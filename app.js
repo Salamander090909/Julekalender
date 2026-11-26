@@ -98,7 +98,7 @@ app.get("/admin", requireAdmin, async (req, res) => {
 
     const stats = {
         svarTotalt: await Besvarelse.countDocuments(),
-        antallBrukere: users.length 
+        antallBrukere: users.length
     };
 
     res.render("admin/admin", {
@@ -134,7 +134,7 @@ app.post("/admin/luke/:nr/trekk", requireAdmin, async (req, res) => {
 
     const riktige = await Besvarelse.find({ luke: luke._id, riktig: true });
 
-    if (riktige.length === 0) return res.redirect("/admin");   // denne beholder du
+    if (riktige.length === 0) return res.redirect("/admin"); 
 
     const tilfeldig = riktige[Math.floor(Math.random() * riktige.length)];
 
@@ -152,7 +152,7 @@ app.get("/luke/:nr", async (req, res) => {
     const dag = idag.getMonth() === 11 ? idag.getDate() : 0;
 
     if (!luke) {
-        return res.status(404).send("Fant ikke luken");
+        return res.status(404).send("Fant ikke luken"); 
     }
   
     if (luke.nr > dag) {
