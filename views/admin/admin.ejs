@@ -20,11 +20,11 @@
 
             <label for="søk">Søk etter svar:</label>
             <input 
-            type="text"
-            name="søk"
-            id="søk"
-            placeholder="skriv inn et svar..."
-            value="<%= søk || ``%>"
+                type="text"
+                name="søk"
+                id="søk"
+                placeholder="skriv inn et svar..."
+                value="<%= søk || ``%>"
             >
 
             <button type="submit">søk</button>
@@ -33,29 +33,35 @@
         <section class="AdminWrapper">
 
             <div class="gruppeListe">
-                <% grupper.forEach(g => { %>
+                <!-- viser alle gruppene med deres info -->
+                <% grupper.forEach(g => { %> 
                     <section class="luke-seksjon">
                             
                             <div class="luke-info">
+                                <!-- tittel på luken, spøsmålet som brukeren fikk, og hva som fasiten er -->
                                 <h2 class="luke-tittel">Luke <%= g.luke.nr %>: <%= g.luke.tittel %></h2>
                                 <p><strong>Spørsmål:</strong> <%= g.luke.question %></p>
                                 <p class="luke-fasit"><strong>Riktig svar:</strong> <%= g.luke.correct_answer %></p>
             
+                                <!-- viser antall svar og hvor mange som er riktige -->
                                 <% const antallRiktige = g.svar.filter(b => b.riktig).length %>
                                 <p><strong>Markert riktig:</strong> <%= antallRiktige %></p>
                                 <p><strong>Antall svar:</strong> <%= g.svar.length %></p>
             
+                                <!-- vis det er en vinner, vil mailen deres vises her -->
                                 <% if (g.luke.vinner) { %>
                                     <p class="luke-vinner">Vinner: <%= g.luke.vinner.email %></p>
                                 <% } %>
-            
+
+                                    <!-- form så du kan trekke en vinner til luken -->
                                 <form method="POST" action="/admin/luke/<%= g.luke.nr %>/trekk">
                                     <button class="svarBtn" type="submit" <%= antallRiktige === 0 ? "disabled" : "" %>>
                                         <%= g.luke.vinner ? "Trekk på nytt" : "Trekk vinner" %>
                                     </button>
                                 </form>
                             </div>
-            
+                            
+                            <!-- Vil vise alle svarene, med brukeren sin mail, hva de svarte, om den er merkert riktig eller ikke, og en knapp så du kan styre det -->
                             <div class="svar-liste">
                                 <% g.svar.forEach(b => { %>
                                     <div class="svar-rad">
@@ -86,6 +92,7 @@
                 <% }) %>
             </div>
 
+            <!-- enkel side for å vise alle brukerene som er registrert -->
             <div class="brukerListe">
                 <h1>Alle brukere</h1>
                 <span><h3>antall: <%=users.length%></h3></span>

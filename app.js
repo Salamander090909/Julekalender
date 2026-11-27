@@ -1,36 +1,37 @@
 const express = require("express");
 const cookieParser = require("cookie-parser")
 require("dotenv").config();
-const env = require("dotenv")
 const mongoose = require("mongoose")
 const jwt = require("jsonwebtoken")
 
+//importerer alle modellene 
 const User = require("./models/User")
 const Luke = require("./models/Luke");
 const Besvarelse = require("./models/Besvarelse");
 
 const app = express()
 
+// setter view engine til ejs
 app.set("view engine", "ejs")
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI); //for å connecte til mongo databasen med uri string fra .env
 
 app.get("/", async (req, res) => {
     const luker = await Luke.find().sort({ nr: 1 });
-    console.log("Antall luker:", luker.length);
-    console.log("Luker:", luker);
     
+    //henter ut datoen fra serveren, og sjekker om måneden er desember
     const idag = new Date("2026.12.3"); 
     const dag = idag.getMonth() === 11 ? idag.getDate() : 0;
 
     let user = null
 
-    const token = req.cookies.jwt;
+    const token = req.cookies.jwt; //henter ut cookien fra requesten
 
+    //vis brukeren har en token vil den verifisere at denne stemmer med secret keyen
     if(token) {
         try {
             const decoded = jwt.verify(token, process.env.SECRET_JWT);
@@ -39,13 +40,12 @@ app.get("/", async (req, res) => {
             user = null
         }
     }
-    console.log(req.cookies);
 
     res.render('index', { luker, dag, user });
 });
 
 app.get("/register", (req, res) => {
-    const fraLuke = req.query.fra === "luke";
+    const fraLuke = req.query.fra === "luke"; //sjekker om brukeren kommer fra en redirect fra en luke
 
     res.render("register", {fraLuke, user: null})
 })
@@ -53,12 +53,12 @@ app.get("/register", (req, res) => {
 async function requireAdmin(req, res, next) {
     try {
         const token = req.cookies.jwt;
-        if (!token) return res.redirect("/");
+        if (!token) return res.redirect("/"); //vis brukeren ikke har en token vil den redirectes til forsiden
 
         const decoded = jwt.verify(token, process.env.SECRET_JWT);
-        const user = await User.findById(decoded.userId);
+        const user = await User.findById(decoded.userId); //verifiserer og finner user.id
 
-        if (!user || user.role !== "admin") return res.redirect("/");
+        if (!user || user.role !== "admin") return res.redirect("/"); //vis brukeren ikke har en user eller rollen admin blir den sendt til forsiden
 
         req.user = user;
         next();
@@ -67,22 +67,22 @@ async function requireAdmin(req, res, next) {
     }
 }
 
-app.get("/admin", requireAdmin, async (req, res) => {
-    const luker = await Luke.find().sort({ nr: 1 }).populate("vinner");
+app.get("/admin", requireAdmin, async (req, res) => { //den kjører requireAdmin funksjonen før resten starter
+    const luker = await Luke.find().sort({ nr: 1 }).populate("vinner"); //finner vinneren til alle lukene og sorter lukene etter nr 1
     const besvarelser = await Besvarelse.find().populate("user").sort({ createdAt: 1 });
     const users = await User.find();
 
-    const alle = luker.map(luke => ({
+    const alle = luker.map(luke => ({ //lager et nytt objekt for hver luke som inneholder "luke" og "svar"
         luke,
-        svar: besvarelser.filter(b => b.user && b.luke.equals(luke._id))
-    })).filter(g => g.svar.length > 0);
+        svar: besvarelser.filter(b => b.user && b.luke.equals(luke._id)) //henter ut alle besvarelsene som passer til denne luken
+    })).filter(g => g.svar.length > 0); //fjerner de som ikke har noen svar
 
     const valgt = Number(req.query.luke);
     const søk = (req.query.søk || "").trim().toLowerCase();
 
-    let grupper = valgt ? alle.filter(g => g.luke.nr === valgt) : alle;
+    let grupper = valgt ? alle.filter(g => g.luke.nr === valgt) : alle; //dette filterer for å vise luken som admin velger i "valgt"
 
-    if (søk) {
+    if (søk) { //den sjekker om det admin skriver inn i "søk" er noe som noen besvarelser inneholder, også viser den de.
         grupper = grupper
             .map(g => ({
                 luke: g.luke,
@@ -96,7 +96,7 @@ app.get("/admin", requireAdmin, async (req, res) => {
     }
     
 
-    const stats = {
+    const stats = { //sjekker hvor mange som har svart og hvor mange bruekre som er registrert
         svarTotalt: await Besvarelse.countDocuments(),
         antallBrukere: users.length
     };
@@ -112,15 +112,15 @@ app.get("/admin", requireAdmin, async (req, res) => {
     });
 });
 
-app.post("/admin/besvarelser/:id/toggle", requireAdmin, async (req, res) => {
-    if (!mongoose.isValidObjectId(req.params.id)) {
+app.post("/admin/besvarelser/:id/toggle", requireAdmin, async (req, res) => { //toggle er for å endre om svaret er riktig eller feil
+    if (!mongoose.isValidObjectId(req.params.id)) { //sjekker om iden til objekte er valid
         return res.redirect("/admin"); 
     }
 
-    const besvarelse = await Besvarelse.findById(req.params.id);
+    const besvarelse = await Besvarelse.findById(req.params.id); //finner besvarelsen by ID
 
     if (besvarelse) {
-        besvarelse.riktig = !besvarelse.riktig;
+        besvarelse.riktig = !besvarelse.riktig; //den switcher mellom før den lagrer
         await besvarelse.save();
     }
 
