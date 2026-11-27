@@ -132,16 +132,16 @@ app.post("/admin/luke/:nr/trekk", requireAdmin, async (req, res) => {
 
     if (!luke) return res.redirect("/admin");
 
-    const riktige = await Besvarelse.find({ luke: luke._id, riktig: true });
+    const riktige = await Besvarelse.find({ luke: luke._id, riktig: true }); //henter ut alle svarene som er merkert riktig
 
     if (riktige.length === 0) return res.redirect("/admin"); 
 
-    const tilfeldig = riktige[Math.floor(Math.random() * riktige.length)];
+    const tilfeldig = riktige[Math.floor(Math.random() * riktige.length)]; //trekker en tilfedig vinner ut ifra de som svarte riktig med math.random
 
     luke.vinner = tilfeldig.user;
     await luke.save();
 
-    res.redirect(req.get("Referer") || "/admin");
+    res.redirect(req.get("Referer") || "/admin"); //sendertilbake til samme side den var på
 });
 
 

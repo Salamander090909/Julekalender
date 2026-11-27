@@ -76,6 +76,13 @@ SECRET_JWT=
 
 Når du er ferdig fjerner du .example fra navnet slik at filen heter ".env"
 
+## Legge inn luker i databasen
+Lukene ligger i filen "luker.json" og må legges inn i databasen før nettsiden viser noe. Dette gjør du med seed-scriptet. Pass på at ".env" er ferdig utfylt og at MongoDB kjører, og skriv så:
+```bash
+node seed.js
+```
+Hvis alt gikk bra står det "Importerte 24 luker" i terminalen. Du trenger bare gjøre dette en gang. Hvis det allerede finnes luker i databasen, avbryter scriptet uten å endre noe, så det er trygt å kjøre det flere ganger.
+
 ## Database
 I databasen er det disse tre tingene som blir lagret
 - **Luker**
